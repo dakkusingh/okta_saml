@@ -1,4 +1,4 @@
-name: okta_saml_login
+name: 'OKTA SAML Login'
 type: module
 description: Okta SAML Login Integration
 core: '8.x'
