@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: oktaaccount
+label: 'OKTA User account menu'
+description: 'Links related to the OKTA user account'
+locked: true
