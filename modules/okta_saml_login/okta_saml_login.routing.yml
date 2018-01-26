@@ -7,13 +7,3 @@ okta_saml_login.signin_widget:
     _user_is_logged_in: 'FALSE'
   options:
     _maintenance_access: TRUE
-    
-okta_saml_login.settings:
-  path: '/admin/config/okta_saml_login/settings'
-  defaults:
-    _form: '\Drupal\okta_saml_login\Form\SettingsForm'
-    _title: 'Signup Form Settings'
-  requirements:
-    _permission: 'administer site configuration'
-  options:
-    _admin_route: TRUE
