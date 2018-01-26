@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Contains okta_saml_login.module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function okta_saml_login_theme() {
+  return [
+    'okta_saml_login_signin_widget' => [
+      'variables' => ['vars' => NULL],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_link_alter().
+ * @see http://cgit.drupalcode.org/login_destination/tree/login_destination.module?h=8.x-1.x#n93
+ */
+function okta_saml_login_link_alter(&$variables) {
+
+  $routes = [
+    'okta_saml_login.signin_widget'
+  ];
+
+  /* @var Drupal\Core\Url $url */
+  $url = $variables['url'];
+  if ($url->isExternal()) {
+    return;
+  }
+
+  if ($url->isRouted() && !in_array($url->getRouteName(), $routes)) {
+    return;
+  }
+
+  // Get current path.
+  $current = \Drupal::service('path.current')->getPath();
+
+  // Change the SAML link to include destination.
+  $variables['options']['query']['ReturnTo'] = $current;
+}
