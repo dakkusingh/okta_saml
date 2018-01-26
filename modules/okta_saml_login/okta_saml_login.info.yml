@@ -1,0 +1,7 @@
+name: okta_saml_login
+type: module
+description: Okta SAML Login Integration
+core: '8.x'
+dependencies:
+  - okta_api
+  - simplesamlphp_auth
