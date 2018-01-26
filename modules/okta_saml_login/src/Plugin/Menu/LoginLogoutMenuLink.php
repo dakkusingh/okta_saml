@@ -64,10 +64,10 @@ class LoginLogoutMenuLink extends MenuLinkDefault {
    */
   public function getTitle() {
     if ($this->currentUser->isAuthenticated()) {
-      return $this->t('Logout');
+      return $this->t('Okta Logout');
     }
     else {
-      return $this->t('Login');
+      return $this->t('Okta Login');
     }
   }
 
