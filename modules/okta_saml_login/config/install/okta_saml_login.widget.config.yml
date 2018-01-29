@@ -30,24 +30,23 @@ language: en
 i18n:
   en:
     # See https://github.com/okta/okta-signin-widget/blob/master/packages/@okta/i18n/dist/properties/login.properties#L435
-    primaryauth_@_title: Sign in to Acme,
-    primaryauth_@_username_@_placeholder: Username,
-    primaryauth_@_username_@_tooltip: Username,
-    primaryauth_@_password_@_placeholder: Password,
-    primaryauth_@_password_@_tooltip: Password,
-    primaryauth_@_submit: Sign In,
+    primaryauth_@_title: Sign in to Drupal
+    primaryauth_@_username_@_placeholder: Username
+    primaryauth_@_username_@_tooltip: Username
+    primaryauth_@_password_@_placeholder: Password
+    primaryauth_@_password_@_tooltip: Password
+    primaryauth_@_submit: Sign In
 
 # See https://github.com/okta/okta-signin-widget#links
 helpLinks:
-  help: https://acme.com/help
-  forgotPassword: https://acme.com/forgot-password
-  unlock: https://acme.com/unlock-account
-  signOutLink: 'https://www.signmeout.com'
+  help: '/help'
+  forgotPassword: '/user/password'
+  signOutLink: '/user/logout'
 
   # helpLinks.custom - Array of custom link objects {text, href}
   # that will be added to the "Need help signing in?" section.
   custom:
-  - text: What is Okta?
-    href: https://acme.com/what-is-okta
-  - text: Acme Portal
-    href: https://acme.com
+  - text: Drupal Okta SAML Integration
+    href: https://www.drupal.org/project/okta_saml
+  - text: Drupal Okta API Module
+    href: https://www.drupal.org/project/okta_api
