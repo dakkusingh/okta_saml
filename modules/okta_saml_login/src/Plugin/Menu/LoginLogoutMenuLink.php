@@ -6,6 +6,7 @@ use Drupal\Core\Menu\MenuLinkDefault;
 use Drupal\Core\Menu\StaticMenuLinkOverridesInterface;
 use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Config\ConfigFactory;
 
 /**
  * A menu link that shows "Log in" or "Log out" as appropriate.
@@ -18,6 +19,8 @@ class LoginLogoutMenuLink extends MenuLinkDefault {
    * @var \Drupal\Core\Session\AccountInterface
    */
   protected $currentUser;
+
+  protected $config;
 
   /**
    * Constructs a new LoginLogoutMenuLink.
@@ -32,15 +35,19 @@ class LoginLogoutMenuLink extends MenuLinkDefault {
    *   The static override storage.
    * @param \Drupal\Core\Session\AccountInterface $current_user
    *   The current user.
+   * @param \Drupal\Core\Config\ConfigFactory $config
+   *   An instance of ConfigFactory.*
    */
   public function __construct(array $configuration,
                               $plugin_id,
                               $plugin_definition,
                               StaticMenuLinkOverridesInterface $static_override,
-                              AccountInterface $current_user) {
+                              AccountInterface $current_user,
+                              ConfigFactory $config) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $static_override);
 
     $this->currentUser = $current_user;
+    $this->config = $config->get('okta_saml_login.menu.config');
   }
 
   /**
@@ -55,7 +62,8 @@ class LoginLogoutMenuLink extends MenuLinkDefault {
       $plugin_id,
       $plugin_definition,
       $container->get('menu_link.static.overrides'),
-      $container->get('current_user')
+      $container->get('current_user'),
+      $container->get('config.factory')
     );
   }
 
@@ -63,11 +71,12 @@ class LoginLogoutMenuLink extends MenuLinkDefault {
    * {@inheritdoc}
    */
   public function getTitle() {
+    $menuConfig = $this->config->get();
     if ($this->currentUser->isAuthenticated()) {
-      return $this->t('Okta Logout');
+      return $this->t($menuConfig['logout']);
     }
     else {
-      return $this->t('Okta Login');
+      return $this->t($menuConfig['login']);
     }
   }
 
