@@ -7,6 +7,7 @@ use Drupal\Core\Url;
 use Drupal\Core\Config\ConfigFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  *
@@ -33,6 +34,7 @@ class SigninController extends ControllerBase {
   public function __construct(ConfigFactory $config,
                               RequestStack $request_stack) {
     $this->config = $config->get('okta_api.settings');
+    $this->widgetConfig = $config->get('okta_saml_login.widget.config');
     $this->requestStack = $request_stack;
   }
 
@@ -50,6 +52,16 @@ class SigninController extends ControllerBase {
    * {@inheritdoc}
    */
   public function signin() {
+    $widgetConfigTemp = $this->widgetConfig->get();
+
+    // TODO Find a nicer way to str_replace all keys containing _@_ to . example primaryauth_@_title to primaryauth.title
+    // See https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Config%21ConfigBase.php/function/ConfigBase%3A%3AvalidateKeys/8.2.x
+    $widgetConfigReplaced = str_replace('_@_', '.', Yaml::dump($widgetConfigTemp));
+    $widgetConfig = Yaml::parse($widgetConfigReplaced);
+
+    // Add the Okta domian dynamically
+    $widgetConfig['baseUrl'] = $this->getOktaDomain();
+
     return [
       '#theme' => 'okta_saml_login_signin_widget',
       '#title' => 'Sign in',
@@ -60,9 +72,9 @@ class SigninController extends ControllerBase {
         ],
         'drupalSettings' => [
           'okta_saml_login' => [
-            'okta_org_url' => $this->getOktaDomain(),
             'redirect_url' => $this->getRedirectUrl(),
           ],
+          'okta_saml_config' => $widgetConfig,
         ],
       ],
     ];
@@ -109,5 +121,5 @@ class SigninController extends ControllerBase {
 
     return $redirectUrl;
   }
-
+  
 }

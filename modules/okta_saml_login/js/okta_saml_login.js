@@ -8,9 +8,9 @@
 
     $(document).ready(function () {
         var settings = drupalSettings.okta_saml_login;
-        var orgUrl = settings.okta_org_url;
-        var oktaSignIn = new OktaSignIn({baseUrl: orgUrl});
+        var config = drupalSettings.okta_saml_config;
         var redirectUrl = settings.redirect_url;
+        var oktaSignIn = new OktaSignIn(config);
 
         oktaSignIn.renderEl(
             { el: '#okta-login-container' },
