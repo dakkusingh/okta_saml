@@ -103,7 +103,7 @@ class AccessDeniedRedirect implements EventSubscriberInterface {
           // Redirect an authenticated user to the profile page.
           $url = Url::fromRoute(
             'entity.user.canonical',
-            ['user' => $this->account->id()],
+            ['user' => $this->currentUser->id()],
             $options
           )->toString();
 
