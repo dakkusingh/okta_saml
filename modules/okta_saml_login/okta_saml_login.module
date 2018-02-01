@@ -40,5 +40,6 @@ function okta_saml_login_link_alter(&$variables) {
   $current = \Drupal::service('path.current')->getPath();
 
   // Change the SAML link to include destination.
-  $variables['options']['query']['ReturnTo'] = $current;
+  // TODO path.current appears to get cached. Resolve.
+  //$variables['options']['query']['ReturnTo'] = $current;
 }
