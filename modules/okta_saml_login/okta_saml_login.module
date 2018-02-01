@@ -1,5 +1,7 @@
 <?php
 
+use Drupal\Core\Url;
+
 /**
  * @file
  * Contains okta_saml_login.module.
@@ -36,10 +38,13 @@ function okta_saml_login_link_alter(&$variables) {
     return;
   }
 
-  // Get current path.
-  $current = \Drupal::service('path.current')->getPath();
-
   // Change the SAML link to include destination.
-  // TODO path.current appears to get cached. Resolve.
-  //$variables['options']['query']['ReturnTo'] = $current;
+  if ($returnTo = \Drupal::request()->query->get('ReturnTo')) {
+    $redirect = $returnTo;
+  }
+  else {
+    $redirect = Url::fromRoute('<front>')->toString();
+  }
+
+  $variables['options']['query']['ReturnTo'] = $redirect;
 }
