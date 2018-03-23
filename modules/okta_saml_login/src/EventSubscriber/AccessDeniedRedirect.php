@@ -51,7 +51,9 @@ class AccessDeniedRedirect implements EventSubscriberInterface {
    * @param \Drupal\Core\Routing\RedirectDestinationInterface $redirect_destination
    *   The redirect destination service.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, AccountInterface $current_user, RedirectDestinationInterface $redirect_destination) {
+  public function __construct(ConfigFactoryInterface $config_factory,
+                              AccountInterface $current_user,
+                              RedirectDestinationInterface $redirect_destination) {
     $this->configFactory = $config_factory;
     $this->currentUser = $current_user;
     $this->redirectDestination = $redirect_destination;
@@ -84,9 +86,9 @@ class AccessDeniedRedirect implements EventSubscriberInterface {
       // Custom okta login page.
       $loginRoute = 'okta_saml_login.signin_widget';
 
-      // Forward the user to the page they were visiting before they had to log in.
+      // Forward the user to the page they were
+      // visiting before they had to log in.
       // Basically, a return to url.
-      //$requestUrl = $event->getRequest()->getRequestUri();
       $requestUrl = \Drupal::service('path.current')->getPath();
       $redirectUrl = Url::fromUserInput($requestUrl)->toString();
 

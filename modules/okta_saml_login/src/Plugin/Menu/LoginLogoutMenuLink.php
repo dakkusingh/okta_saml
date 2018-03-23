@@ -36,7 +36,7 @@ class LoginLogoutMenuLink extends MenuLinkDefault {
    * @param \Drupal\Core\Session\AccountInterface $current_user
    *   The current user.
    * @param \Drupal\Core\Config\ConfigFactory $config
-   *   An instance of ConfigFactory.*
+   *   An instance of ConfigFactory.*.
    */
   public function __construct(array $configuration,
                               $plugin_id,
@@ -73,10 +73,10 @@ class LoginLogoutMenuLink extends MenuLinkDefault {
   public function getTitle() {
     $menuConfig = $this->config->get();
     if ($this->currentUser->isAuthenticated()) {
-      return $this->t($menuConfig['logout']);
+      return $menuConfig['logout'];
     }
     else {
-      return $this->t($menuConfig['login']);
+      return $menuConfig['login'];
     }
   }
 

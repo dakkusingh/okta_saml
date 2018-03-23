@@ -1,11 +1,11 @@
 <?php
 
-use Drupal\Core\Url;
-
 /**
  * @file
- * Contains okta_saml_login.module.
+ * Okta SAML Login widget.
  */
+
+use Drupal\Core\Url;
 
 /**
  * Implements hook_theme().
@@ -20,12 +20,13 @@ function okta_saml_login_theme() {
 
 /**
  * Implements hook_link_alter().
+ *
  * @see http://cgit.drupalcode.org/login_destination/tree/login_destination.module?h=8.x-1.x#n93
  */
 function okta_saml_login_link_alter(&$variables) {
 
   $routes = [
-    'okta_saml_login.signin_widget'
+    'okta_saml_login.signin_widget',
   ];
 
   /* @var Drupal\Core\Url $url */

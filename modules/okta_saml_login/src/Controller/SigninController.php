@@ -10,10 +10,17 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Yaml\Yaml;
 
 /**
+ * Class SigninController.
  *
+ * @package Drupal\okta_saml_login\Controller
  */
 class SigninController extends ControllerBase {
 
+  /**
+   * Config.
+   *
+   * @var \Drupal\Core\Config\Config|\Drupal\Core\Config\ImmutableConfig
+   */
   protected $config;
 
   /**
@@ -54,12 +61,13 @@ class SigninController extends ControllerBase {
   public function signin() {
     $widgetConfigTemp = $this->widgetConfig->get();
 
-    // TODO Find a nicer way to str_replace all keys containing _@_ to . example primaryauth_@_title to primaryauth.title
+    // TODO Find a nicer way to str_replace all keys containing
+    // _@_ to . example primaryauth_@_title to primaryauth.title
     // See https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Config%21ConfigBase.php/function/ConfigBase%3A%3AvalidateKeys/8.2.x
     $widgetConfigReplaced = str_replace('_@_', '.', Yaml::dump($widgetConfigTemp));
     $widgetConfig = Yaml::parse($widgetConfigReplaced);
 
-    // Add the Okta domian dynamically
+    // Add the Okta domian dynamically.
     $widgetConfig['baseUrl'] = $this->getOktaDomain();
 
     return [
@@ -82,7 +90,10 @@ class SigninController extends ControllerBase {
   }
 
   /**
+   * Get Okta Domain.
+   *
    * @return string
+   *   Url.
    */
   private function getOktaDomain() {
     $oktaApiDomain = $this->config->get('okta_domain');
@@ -96,7 +107,10 @@ class SigninController extends ControllerBase {
   }
 
   /**
+   * Get Redirect Url.
+   *
    * @return \Drupal\Core\GeneratedUrl|string
+   *   Url.
    */
   private function getRedirectUrl() {
     $request = $this->requestStack->getCurrentRequest();
@@ -121,5 +135,5 @@ class SigninController extends ControllerBase {
 
     return $redirectUrl;
   }
-  
+
 }
